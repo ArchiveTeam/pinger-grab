@@ -325,19 +325,15 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       or status_code  == 0 then
     io.stdout:write("Server returned " .. http_stat.statcode .. " (" .. err .. "). Sleeping.\n")
     io.stdout:flush()
-    local maxtries = 8
+    local maxtries = 3
     if not allowed(url["url"]) then
-        maxtries = 0
+        maxtries = 2
     end
     if tries >= maxtries then
       io.stdout:write("\nI give up...\n")
       io.stdout:flush()
       tries = 0
-      if allowed(url["url"]) then
-        return wget.actions.ABORT
-      else
-        return wget.actions.EXIT
-      end
+      return wget.actions.ABORT
     end
     os.execute("sleep " .. math.floor(math.pow(2, tries)))
     tries = tries + 1
