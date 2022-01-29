@@ -69,7 +69,8 @@ if string.match(item, "^user:") then return nil end
 end
 
 allowed = function(url, parenturl)
-  if string.match(url, "^https?://[^/]*pinger%.pl/add_comment") then
+  if string.match(url, "^https?://[^/]*pinger%.pl/add_comment")
+    or string.match(url, "^https?://[^/]*pinger%.pl/get_comments%.rss") then
     return false
   end
 
